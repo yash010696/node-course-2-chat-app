@@ -14,19 +14,32 @@ app.use(express.static(publicpath));
 io.on('connect', (socket) => {
     console.log('new user connected');
 
+    socket.emit('newmessage',{
+        from:'Admin',
+        text:'Welcome to the chst app'
+    });
+
+    socket.broadcast.emit('newmessage',{
+        from:'Admin',
+        text:'New User Joined'
+    });
+
+    socket.on('createmessage', function (message) {
+        console.log('message:', message);
+        io.emit('newmessage',{
+            from:message.from,
+            text:message.text
+        });
+
+        // socket.broadcast.emit('newmessage',{
+        //     from:message.from,
+        //     text:message.text
+        // })
+    });
+
     socket.on('disconnect', (socket) => {
         console.log('User Disconnected');
     });
-
-    socket.emit('fromServer',{
-        from:"yash",
-        text:"heyyy youuu"
-    })
-
-   socket.on('fromClient',function(message){
-    console.log('message:',message);
-   })
-
 });
 
 
