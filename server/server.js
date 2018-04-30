@@ -3,6 +3,7 @@ var express = require('express');
 var http = require('http');
 var socketIO = require('socket.io');
 
+const {generatemessage}=require('./utils/message');
 const publicpath = path.join(__dirname, '/../public');
 
 var app = express();
@@ -14,22 +15,13 @@ app.use(express.static(publicpath));
 io.on('connect', (socket) => {
     console.log('new user connected');
 
-    socket.emit('newmessage',{
-        from:'Admin',
-        text:'Welcome to the chst app'
-    });
+    socket.emit('newmessage',generatemessage('Admin','Welcome to the chat app'));
 
-    socket.broadcast.emit('newmessage',{
-        from:'Admin',
-        text:'New User Joined'
-    });
+    socket.broadcast.emit('newmessage',generatemessage('Admin','New User Joined'));
 
     socket.on('createmessage', function (message) {
         console.log('message:', message);
-        io.emit('newmessage',{
-            from:message.from,
-            text:message.text
-        });
+        io.emit('newmessage',generatemessage(message.from,message.text));
 
         // socket.broadcast.emit('newmessage',{
         //     from:message.from,
