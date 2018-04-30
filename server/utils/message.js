@@ -1,8 +1,8 @@
-var generatemessage = (from,text)=>{
+var generatemessage = (from, text) => {
     return {
         from,
         text
     };
 };
 
-module.exports={generatemessage};
+module.exports = { generatemessage };
