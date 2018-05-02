@@ -1,4 +1,4 @@
-var moment=require('moment');
+var moment = require('moment');
 var generatemessage = (from, text) => {
     // console.log('--------0',from);
     return {
@@ -8,13 +8,13 @@ var generatemessage = (from, text) => {
     };
 };
 
-var generatelocationmessage=(from,latitude,longitude)=>{
+var generatelocationmessage = (from, latitude, longitude) => {
     // console.log('********',latitude);
     return {
         from,
-        url:`http://www.google.com/maps?q=${latitude},${longitude}`,
+        url: `http://www.google.com/maps?q=${latitude},${longitude}`,
         createdAt: moment().valueOf()
     };
 };
 
-module.exports = { generatemessage ,generatelocationmessage };
+module.exports = { generatemessage, generatelocationmessage };
