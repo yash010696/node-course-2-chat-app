@@ -37,9 +37,11 @@ socket.on('disconnect', function () {
 });
 
 socket.on('updateUserList',function(users){
+    // console.log(']]]]]]]]]]]]]]]]',users);
     var ol=jQuery('<ol></ol>');
     users.forEach(function(user){
-        ol.append(jQuery('<li></li>').text(user.name));
+        // var name=user.name;
+        ol.append(jQuery('<li></li>').text(user));
     });
 
     jQuery('#users').html(ol);
@@ -89,7 +91,6 @@ jQuery('#message-form').on('submit', function (e) {
     e.preventDefault();
 
     socket.emit('createmessage', {
-        from: 'Admin',
         text: jQuery('[name=message]').val()
     }, function () {
         jQuery('[name=message]').val('');

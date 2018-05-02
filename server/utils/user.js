@@ -21,9 +21,10 @@ class Users{
         return this.users.filter((user)=> user.id === id)[0];
     }
     getUserList(room){
-        var user1=this.users.filter((user)=> user.room === room);
-        var namesArray=this.users.filter((user1)=> user1.name);
-        // console.log('-------------',namesArray,'+++++++++++',user1);
+        
+        var users=this.users.filter((user)=> user.room == room);
+        var namesArray=users.map((user)=> user.name);
+        // console.log('-------------',namesArray);
         return namesArray;
     }
 }

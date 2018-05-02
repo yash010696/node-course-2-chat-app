@@ -6,6 +6,7 @@ var socketIO = require('socket.io');
 const {isRealString}=require('./utils/validation');
 const { generatemessage, generatelocationmessage } = require('./utils/message');
 const publicpath = path.join(__dirname, '/../public');
+const port= process.env.PORT || 3000;
 const {Users}=require('./utils/user');
 var users=new Users();
 
@@ -33,14 +34,21 @@ io.on('connect', (socket) => {
     });
 
     socket.on('createmessage', function (message, callback) {
-        console.log('message:', message.from);
-        io.emit('newmessage', generatemessage(message.from, message.text));
+        var user=users.getUser(socket.id);
+
+        if(user && isRealString(message.text)){
+            io.to(user.room).emit('newmessage', generatemessage(user.name, message.text));
+        }
         callback();
     });
 
     socket.on('createlocationmessage', function (coords) {
         // console.log('//////',coords.latitude);
-        io.emit('newlocationmessage', generatelocationmessage('Admin', coords.latitude, coords.longitude));
+        var user=users.getUser(socket.id);
+
+        if(user){
+            io.to(user.room).emit('newlocationmessage', generatelocationmessage(user.name, coords.latitude, coords.longitude));
+        }
     });
 
     socket.on('disconnect', () => {
@@ -56,6 +64,6 @@ io.on('connect', (socket) => {
 
 
 
-server.listen(3000, () => {
+server.listen(port, () => {
     console.log("Server started at port 3000");
-});
+}); 
