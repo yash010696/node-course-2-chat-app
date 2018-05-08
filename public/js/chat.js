@@ -55,7 +55,7 @@ socket.on('newmessage', function (message) {
         createdAt: formattedTime
     }
     console.log(body.text);
-    var notification= new Notification("title",{text:message.text});
+    var notification= new Notification(message.text);
 
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
