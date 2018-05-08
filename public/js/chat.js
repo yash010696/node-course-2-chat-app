@@ -49,7 +49,14 @@ socket.on('updateUserList',function(users){
 
 socket.on('newmessage', function (message) {
     var formattedTime = moment(message.createdAt).format('h:mm a')
-    // console.log('///////',message.from);
+    var title=message.from;
+    var body= {
+        text:message.text,
+        createdAt: formattedTime
+    }
+    console.log(body.text);
+    var notification= new Notification("title",{text:message.text});
+
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
         text: message.text,
@@ -58,6 +65,7 @@ socket.on('newmessage', function (message) {
     });
 
     jQuery('#messages').append(html);
+    
     scrollToBottom();
     // console.log("newmessage", message);
     // var li=jQuery('<li></li>');
