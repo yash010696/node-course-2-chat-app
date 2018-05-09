@@ -8,14 +8,20 @@
     "test": "mocha server/**/*.test.js",
     "test-watch": "nodemon --exec 'npm test'"
   },
-  "engines": {
-    "node": "8.11.1"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yash010696/node-course-2-chat-app.git"
   },
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yash010696/node-course-2-chat-app/issues"
+  },
+  "homepage": "https://github.com/yash010696/node-course-2-chat-app#readme",
   "dependencies": {
     "express": "^4.16.3",
     "moment": "^2.22.1",
+    "node-notifier": "^5.2.1",
     "socket.io": "^2.1.0"
   }
 }

@@ -1,16 +1,16 @@
 var socket = io();
 
-function scrollToBottom(){
-    var message=jQuery('#messages');
-    var newmessage=message.children('li:last-child');
+function scrollToBottom() {
+    var message = jQuery('#messages');
+    var newmessage = message.children('li:last-child');
 
-    var clientHeight=message.prop('clientHeight');
-    var scrollTop=message.prop('scrollTop');
-    var scrollHeight=message.prop('scrollHeight');
-    var newMessageHeight=newmessage.innerHeight();
-    var lastMessageHeight=newmessage.prev().innerHeight();
+    var clientHeight = message.prop('clientHeight');
+    var scrollTop = message.prop('scrollTop');
+    var scrollHeight = message.prop('scrollHeight');
+    var newMessageHeight = newmessage.innerHeight();
+    var lastMessageHeight = newmessage.prev().innerHeight();
 
-    if(clientHeight+scrollTop+newMessageHeight+lastMessageHeight >= scrollHeight){
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
         message.scrollTop(scrollHeight);
         // console.log('should work');
     }
@@ -19,14 +19,14 @@ function scrollToBottom(){
 
 socket.on('connect', function () {
     // console.log("connected to server");
-    var params=jQuery.deparam(window.location.search);
+    var params = jQuery.deparam(window.location.search);
 
-    socket.emit('join',params,function(err){
+    socket.emit('join', params, function (err) {
 
-        if(err){
+        if (err) {
             alert(err);
-            window.location.href='/';
-        }else{
+            window.location.href = '/';
+        } else {
             console.log('NO error');
         }
     });
@@ -36,10 +36,10 @@ socket.on('disconnect', function () {
     console.log("disconnected from server");
 });
 
-socket.on('updateUserList',function(users){
+socket.on('updateUserList', function (users) {
     // console.log(']]]]]]]]]]]]]]]]',users);
-    var ol=jQuery('<ol></ol>');
-    users.forEach(function(user){
+    var ol = jQuery('<ol></ol>');
+    users.forEach(function (user) {
         // var name=user.name;
         ol.append(jQuery('<li></li>').text(user));
     });
@@ -49,14 +49,14 @@ socket.on('updateUserList',function(users){
 
 socket.on('newmessage', function (message) {
     var formattedTime = moment(message.createdAt).format('h:mm a')
-    var title=message.from;
-    var body= {
-        text:message.text,
+    var title = message.from;
+    var body = {
+        text: message.text,
         createdAt: formattedTime
     }
     console.log(body.text);
 
-    var notification= new Notification(message.from,{body:message.text});    
+    // var notification= new Notification(message.from,{body:message.text});    
 
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
@@ -66,7 +66,6 @@ socket.on('newmessage', function (message) {
     });
 
     jQuery('#messages').append(html);
-    
     scrollToBottom();
     // console.log("newmessage", message);
     // var li=jQuery('<li></li>');
