@@ -2,13 +2,14 @@ const path = require('path');
 var express = require('express');
 var http = require('http');
 var socketIO = require('socket.io');
-
+var notifer=require('node-notifier');
 
 const { isRealString } = require('./utils/validation');
 const { generatemessage, generatelocationmessage } = require('./utils/message');
 const publicpath = path.join(__dirname, '/../public');
 const port = process.env.PORT || 3000;
 const { Users } = require('./utils/user');
+
 var users = new Users();
 
 var app = express();
@@ -38,8 +39,12 @@ io.on('connect', (socket) => {
         var user = users.getUser(socket.id);
 
         if (user && isRealString(message.text)) {
-            var notification = new Notification(user.name, { body: message.text });
-            io.to(user.room).emit('newmessage', notification, generatemessage(user.name, message.text));
+                        
+           // socket.broadcast.to(user.room).emit(notifer.notify({
+            //     title:user.name,
+            //     text:message.text
+            // }));
+            io.to(user.room).emit('newmessage',generatemessage(user.name, message.text));
 
         }
         callback();

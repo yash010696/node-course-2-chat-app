@@ -48,16 +48,17 @@ socket.on('updateUserList', function (users) {
 });
 
 socket.on('newmessage', function (message) {
-    var formattedTime = moment(message.createdAt).format('h:mm a')
+    var formattedTime = moment(message.createdAt).format('h:mm a')  
     var title = message.from;
     var body = {
         text: message.text,
         createdAt: formattedTime
     }
     console.log(body.text);
-
-    // var notification= new Notification(message.from,{body:message.text});    
-
+    if(message){
+        var n= new Notification(message.from,{body:message.text});    
+        setTimeout(n.close.bind(n), 2000);
+    }
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
         text: message.text,
