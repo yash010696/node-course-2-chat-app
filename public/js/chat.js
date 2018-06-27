@@ -27,7 +27,7 @@ socket.on('connect', function () {
             alert(err);
             window.location.href = '/';
         } else {
-            console.log('NO error');
+            console.log('No error');
         }
     });
 });
@@ -43,8 +43,41 @@ socket.on('updateUserList', function (users) {
         // var name=user.name;
         ol.append(jQuery('<li></li>').text(user));
     });
-
     jQuery('#users').html(ol);
+});
+
+socket.on('notify',function(message){
+    // console.log('in notify');
+    // console.log('aaaaaaaaaaaaaaaaaaaaaaa',message.from,'',message.text);
+
+    if(message){
+            var n= new Notification(message.from,{body:message.text});    
+            setTimeout(n.close.bind(n), 2000);
+        // var html={
+        //     from:message.from,
+        //     message:message.text,
+        // }
+        // jQuery('#notify').append(html);
+        }
+
+        var formattedTime = moment(message.createdAt).format('h:mm a')  
+        var title = message.from;
+        var body = {
+            text: message.text,
+            createdAt: formattedTime
+        }
+        // console.log(body.text);
+        // if(message){
+        //     var n= new Notification(message.from,{body:message.text});    
+        //     setTimeout(n.close.bind(n), 2000);
+        // }
+        var template = jQuery('#message-notify').html();
+        var html = Mustache.render(template, {
+            text: message.text,
+            from: message.from,
+            createdAt: formattedTime
+        });   
+        jQuery('#messages').append(html);   
 });
 
 socket.on('newmessage', function (message) {
@@ -54,17 +87,17 @@ socket.on('newmessage', function (message) {
         text: message.text,
         createdAt: formattedTime
     }
-    console.log(body.text);
-    if(message){
-        var n= new Notification(message.from,{body:message.text});    
-        setTimeout(n.close.bind(n), 2000);
-    }
+    // console.log(body.text);
+    // if(message){
+    //     var n= new Notification(message.from,{body:message.text});    
+    //     setTimeout(n.close.bind(n), 2000);
+    // }
     var template = jQuery('#message-template').html();
     var html = Mustache.render(template, {
         text: message.text,
         from: message.from,
         createdAt: formattedTime
-    });
+    }); 
 
     jQuery('#messages').append(html);
     scrollToBottom();

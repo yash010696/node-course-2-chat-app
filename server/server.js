@@ -34,18 +34,13 @@ io.on('connect', (socket) => {
         socket.broadcast.to(params.room).emit('newmessage', generatemessage('Admin', `${params.name} has joined`));
         callback();
     });
-
     socket.on('createmessage', function (message, callback) {
         var user = users.getUser(socket.id);
 
         if (user && isRealString(message.text)) {
-                        
-           // socket.broadcast.to(user.room).emit(notifer.notify({
-            //     title:user.name,
-            //     text:message.text
-            // }));
+            
             io.to(user.room).emit('newmessage',generatemessage(user.name, message.text));
-
+            socket.broadcast.to(user.room).emit('notify',generatemessage(user.name, message.text));   
         }
         callback();
     });
@@ -69,8 +64,6 @@ io.on('connect', (socket) => {
         }
     });
 });
-
-
 
 server.listen(port, () => {
     console.log("Server started at port 3000");

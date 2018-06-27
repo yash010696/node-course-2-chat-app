@@ -7,10 +7,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="/css/styles.css">
-    
+
 </head>
 
 <body class="chat">
+
+    <!-- <div class="notify">
+        <p>{{from}}</p>
+        <script id="aa"> 
+         setInterval("fun()", 1);
+            function fun(){
+             if (document.hasFocus()) {
+                 console.log('aaaa');
+             }else{console.log('vvvvvvvvvvvvvvvvvvvvv')}
+            }
+            </script>    
+    </div> -->
+    <script type="text/template" id="message-notify">
+
+        <li class="message">  
+                <div class="message__body">
+                        <p>{{text}}</p>
+                        <script>console.log(`${text}`);
+                        </script>                        
+                    </div>
+            <!-- <script>
+                setInterval("fun()", 1);
+                function fun(){
+                    if (document.hasFocus()) {
+                        console.log(`${message__body}`);
+                    }else{console.log('vvvvvvvvvvvvvvvvvvvvv')}
+                }
+            
+                </script> -->
+    </li>
+    </script>
+
     <div class="chat__sidebar">
         <h3>People</h3>
         <div id="users"></div>
@@ -19,7 +51,6 @@
     <div class="chat__main">
         <!-- ol=Ordered List -->
         <ol id="messages" class="chat__messages"></ol>
-        <p id="notify"></p>
         <div class="chat__footer">
 
             <form id="message-form">
@@ -38,7 +69,7 @@
                 <span>{{createdAt}}</span>
             </div>
             <div class="message__body">
-                <p id="text1">{{text}}</p>
+                <p>{{text}}</p>
             </div>
         </li>
     </script>
@@ -59,9 +90,9 @@
     <script src="/js/libs/jquery-3.1.0.min.js"></script>
     <script src="/js/libs/moment.js"></script>
     <script src="/js/libs/mustache.js"></script>
+    <!-- <script src="/js/libs/sweetalert.min.js"></script> -->
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> -->
     <script src="/js/libs/deparam.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    <script> src="/js/libs/sweetalert.min.js"</script>
     <script src="/js/chat.js"></script>
 </body>
 
