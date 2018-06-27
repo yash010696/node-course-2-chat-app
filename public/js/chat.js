@@ -60,24 +60,24 @@ socket.on('notify',function(message){
         // jQuery('#notify').append(html);
         }
 
-        var formattedTime = moment(message.createdAt).format('h:mm a')  
-        var title = message.from;
-        var body = {
-            text: message.text,
-            createdAt: formattedTime
-        }
+        // var formattedTime = moment(message.createdAt).format('h:mm a')  
+        // var title = message.from;
+        // var body = {
+        //     text: message.text,
+        //     createdAt: formattedTime
+        // }
         // console.log(body.text);
         // if(message){
         //     var n= new Notification(message.from,{body:message.text});    
         //     setTimeout(n.close.bind(n), 2000);
         // }
-        var template = jQuery('#message-notify').html();
-        var html = Mustache.render(template, {
-            text: message.text,
-            from: message.from,
-            createdAt: formattedTime
-        });   
-        jQuery('#messages').append(html);   
+        // var template = jQuery('#message-notify').html();
+        // var html = Mustache.render(template, {
+        //     text: message.text,
+        //     from: message.from,
+        //     createdAt: formattedTime
+        // });   
+        // jQuery('#messages').append(html);   
 });
 
 socket.on('newmessage', function (message) {
